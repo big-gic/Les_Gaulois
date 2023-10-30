@@ -2,8 +2,9 @@ package personnages;
 
 public class Gaulois {
 	private String nom;
-	private int force;
+	private int force, nb_trophees;
 	private int effetPotion = 1;
+	private Equipement[] trophees = new Equipement[100];
 
 	public Gaulois(String nom, int force) {
 		super();
@@ -16,17 +17,30 @@ public class Gaulois {
 	}
 
 	public void parler(String texte) {
-		System.out.println(prendreParole() + "« " + texte + "»");
+		System.out.println(prendreParole() + "ï¿½ " + texte + "ï¿½");
 	}
 
+//	private String prendreParole() {
+//		return "Le gaulois " + nom + " : ";
+//	}
+	
 	private String prendreParole() {
 		return "Le gaulois " + nom + " : ";
 	}
 
+//	public void frapper(Romain romain) {
+//		System.out.println(nom + " envoie un grand coup dans la mï¿½choire de " + romain.getNom());
+//		romain.recevoirCoup(force / 3);
+//	}
+	
 	public void frapper(Romain romain) {
-		System.out.println(nom + " envoie un grand coup dans la mâchoire de " + romain.getNom());
-		romain.recevoirCoup(force / 3);
+		System.out.println(nom + " envoie un grand coup dans la mÃ¢choire de " + romain.getNom());
+		Equipement[] ejecte = romain.recevoirCoup((force / 3) * effetPotion);
+		for (int i = 0; ejecte != null && i < ejecte.length; i++, nb_trophees++) {
+			this.trophees[nb_trophees] = ejecte[i];
+		}
 	}
+
 
 	@Override
 	public String toString() {
@@ -34,8 +48,8 @@ public class Gaulois {
 	}
 
 	public static void main(String[] args) {
-		Gaulois asterix = new Gaulois("Astérix", 8);
-		Romain cesar = new Romain("César", 1);
+		Gaulois asterix = new Gaulois("Astï¿½rix", 8);
+		Romain cesar = new Romain("Cï¿½sar", 1);
 		System.out.println(asterix);
 		asterix.prendreParole();
 		asterix.parler("YOOOOOOOO !");
