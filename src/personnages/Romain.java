@@ -3,7 +3,6 @@ package personnages;
 public class Romain {
 	private String nom;
 	private int force;
-	private String texte;
 	private Equipement[] equipements = new Equipement[2];
 	private int nbEquipement = 0;
 
@@ -40,6 +39,9 @@ public class Romain {
 		case 2:
 			afficherMessageEquipement("est déjà bien protégé", null);
 			break;
+		default:
+			System.out.println("problème dans sEquiper()");
+			break;
 		}
 	}
 
@@ -72,7 +74,7 @@ public class Romain {
 		// pr�condition
 		assert force > 0;
 		int oldForce = force;
-		forceCoup = CalculResistanceEquipement(forceCoup);
+		forceCoup = calculResistanceEquipement(forceCoup);
 		force -= forceCoup;
 		// if (force > 0) {
 		// parler("A�e");
@@ -92,7 +94,7 @@ public class Romain {
 	}
 
 	private int calculResistanceEquipement(int forceCoup) {
-		texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
+		String texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
 		int resistanceEquipement = 0;
 		if (nbEquipement != 0) {
 			texte += "\nMais heureusement, grace � mon �quipement sa force est diminu� de ";
