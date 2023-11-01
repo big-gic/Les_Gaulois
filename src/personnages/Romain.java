@@ -15,7 +15,11 @@ public class Romain {
 	public String getNom() {
 		return nom;
 	}
-
+	
+	public int getForce() {
+		return force;
+	}
+	
 	public void parler(String texte) {
 		System.out.println(prendreParole() + "� " + texte + "�");
 	}
@@ -71,46 +75,52 @@ public class Romain {
 
 	public Equipement[] recevoirCoup(int forceCoup) {
 		Equipement[] equipementEjecte = null;
-		// pr�condition
-		assert force > 0;
-		int oldForce = force;
+
+		// précondition
+		assert this.force > 0;
+
+		int oldForce = this.force;
+
 		forceCoup = calculResistanceEquipement(forceCoup);
-		force -= forceCoup;
-		// if (force > 0) {
-		// parler("A�e");
-		// } else {
-		// equipementEjecte = ejecterEquipement();
-		// parler("J'abandonne...");
-		// }
-		if (force==0) {
-			parler("A�e");
-		}else {
-			equipementEjecte = ejecterEquipement();
-			parler("J'abandonne...");
-		}
-		// post condition la force a diminu�e
-		assert force < oldForce;
+		this.force -= forceCoup;
+
+		if(this.force == 0) { parler("Aïe"); }
+		
+		equipementEjecte = ejecterEquipement();
+		parler("J'abandonne...");
+
+		// post condition la force a diminuée
+		assert this.force < oldForce;
+
 		return equipementEjecte;
 	}
 
 	private int calculResistanceEquipement(int forceCoup) {
 		String texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
+
 		int resistanceEquipement = 0;
-		if (nbEquipement != 0) {
-			texte += "\nMais heureusement, grace � mon �quipement sa force est diminu� de ";
+
+		if(nbEquipement != 0) {
+			texte += "\nMais heureusement, grace à mon équipement sa force est diminué de ";
+
 			for (int i = 0; i < nbEquipement; i++) {
-				if (equipements[i] != null && equipements[i].equals(Equipement.BOUCLIER)) {
-					resistanceEquipement += 8;
-				} else {
-					System.out.println("Equipement casque");
-					resistanceEquipement += 5;
+				if(equipements[i] != null) {
+					if(equipements[i].equals(Equipement.BOUCLIER)) {
+						resistanceEquipement += 8;
+					} else if(equipements[i].equals(Equipement.CASQUE)) {
+						System.out.println("Equipement casque");
+						resistanceEquipement += 5;
+					}
 				}
 			}
-			texte +=resistanceEquipement + "!";
+
+			texte += resistanceEquipement + "!";
 		}
+
 		parler(texte);
+
 		forceCoup -= resistanceEquipement;
-		return forceCoup;
+		return forceCoup < 0 ? 0 : forceCoup;
 	}
 
 	private Equipement[] ejecterEquipement() {

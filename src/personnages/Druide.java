@@ -55,5 +55,3 @@ public class Druide {
         panoramix.preparerPotion();
     }
 }
-
-}

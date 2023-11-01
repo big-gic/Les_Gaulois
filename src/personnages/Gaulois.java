@@ -3,7 +3,7 @@ package personnages;
 public class Gaulois {
 	private String nom;
 	private int force;
-	private int nbTrophees;
+	private int nbTrophees=0;
 	private int effetPotion = 1;
 	private Equipement[] trophees = new Equipement[100];
 
@@ -15,6 +15,10 @@ public class Gaulois {
 
 	public String getNom() {
 		return nom;
+	}
+	
+	public int getForce() {
+		return force;
 	}
 
 	public void parler(String texte) {
@@ -53,21 +57,17 @@ public class Gaulois {
 		this.parler("Merci Druide, je sens que ma force est " + this.effetPotion + " fois décuplée.");
 	}
 	
-	//	
-	
-	public void faireUneDonation(Musee musee) {
-		if(this.nbTrophees > 0) {
-			String texte = "Je donne au musée tous mes trophées :";
-			
-			for(int i = 0; i < this.nbTrophees; i++) {
-				texte += "\n - " + this.trophees[i];
-				musee.donnerTrophee(this, this.trophees[i]);
+	public void faireUneDonnation(Musee musee) {
+		if (nbTrophees!=0) {
+			parler("Je donne au musee tous mes trophees :");
+			for (int i=0; i<nbTrophees; i++) {
+				System.out.println("-"+trophees[i]+"\n");
 			}
+			Trophee troph = new Trophee(this,this.trophees);
+			musee.donnerTrophees(troph);
 			
-			this.parler(texte);
-		}
-		else {
-			this.parler("Je n'ai aucun trophée à donner.");
+		}else {
+			System.out.println("je n'ai rien à donner");
 		}
 	}
 
